@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { logger } from './utils/logger';
+import registerPlugins from './plugins';
 import orderRoutes from './modules/orders/order.routes';
 import orchestrationRoutes from './modules/orchestration/orchestration.routes';
 import { config } from './config';

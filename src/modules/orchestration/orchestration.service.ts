@@ -47,7 +47,7 @@ export class OrchestrationService {
 
     // 👇 Simulación de llamadas a servicios externos 👇
 
-    private async simulateInventoryCheck(cartId: string): Promise<{ available: boolean; reservedAt: string }> {
+    private async simulateInventoryCheck(cartId: string): Promise<{ available: boolean; reservedAt: string; cartId: string }> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({ available: true, reservedAt: new Date().toISOString(), cartId });
@@ -55,7 +55,7 @@ export class OrchestrationService {
         });
     }
 
-    private async simulateFraudCheck(userId: string, forceFail: boolean): Promise<{ score: number; passed: boolean }> {
+    private async simulateFraudCheck(userId: string, forceFail: boolean): Promise<{ score: number; passed: boolean; userId: string }> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (forceFail) {
