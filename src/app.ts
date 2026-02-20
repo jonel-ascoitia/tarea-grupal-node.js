@@ -1,8 +1,8 @@
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { logger } from './utils/logger';
-import registerPlugins from './plugins';
 import orderRoutes from './modules/orders/order.routes';
+import orchestrationRoutes from './modules/orchestration/orchestration.routes';
 import { config } from './config';
 
 export const buildApp = async () => {
@@ -34,6 +34,7 @@ export const buildApp = async () => {
 
     // API Routes
     await app.register(orderRoutes, { prefix: '/api/orders' });
+    await app.register(orchestrationRoutes, { prefix: '/api/orchestration' });
 
     return app;
 };
