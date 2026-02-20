@@ -33,6 +33,15 @@ export const buildApp = async () => {
         return { status: 'ok', timestamp: new Date().toISOString() };
     });
 
+    // Root Welcome
+    app.get('/', async () => {
+        return {
+            message: 'Bienvenido a la API de Orquestación y Órdenes',
+            documentation: '/documentation',
+            health: '/health'
+        };
+    });
+
     // API Routes
     await app.register(orderRoutes, { prefix: '/api/orders' });
     await app.register(orchestrationRoutes, { prefix: '/api/orchestration' });
