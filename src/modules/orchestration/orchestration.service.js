@@ -1,8 +1,7 @@
-import { logger } from '../../utils/logger';
-import { SimulationRequestInput, SimulationResponse } from './orchestration.schema';
+import { logger } from '../../utils/logger.js';
 
 export class OrchestrationService {
-    async runSimulation(input: SimulationRequestInput): Promise<SimulationResponse> {
+    async runSimulation(input) {
         logger.info({ input }, 'Starting parallel orchestration simulation');
 
         // Múltiples endpoints ejecutándose en paralelo
@@ -16,8 +15,8 @@ export class OrchestrationService {
         const results = await Promise.allSettled(promises);
 
         // Integración de respuestas
-        const data: any = {};
-        const errors: string[] = [];
+        const data = {};
+        const errors = [];
         let successCount = 0;
 
         // Consolidar resultados y manejar fallos
@@ -33,7 +32,7 @@ export class OrchestrationService {
             }
         });
 
-        let status: 'success' | 'partial_success' | 'failed' = 'success';
+        let status = 'success';
         if (successCount === 0) status = 'failed';
         else if (successCount < promises.length) status = 'partial_success';
 
@@ -47,7 +46,7 @@ export class OrchestrationService {
 
     // 👇 Simulación de llamadas a servicios externos 👇
 
-    private async simulateInventoryCheck(cartId: string): Promise<{ available: boolean; reservedAt: string; cartId: string }> {
+    async simulateInventoryCheck(cartId) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({ available: true, reservedAt: new Date().toISOString(), cartId });
@@ -55,7 +54,7 @@ export class OrchestrationService {
         });
     }
 
-    private async simulateFraudCheck(userId: string, forceFail: boolean): Promise<{ score: number; passed: boolean; userId: string }> {
+    async simulateFraudCheck(userId, forceFail) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (forceFail) {
@@ -67,7 +66,7 @@ export class OrchestrationService {
         });
     }
 
-    private async simulateShippingCalculation(): Promise<{ cost: number; provider: string }> {
+    async simulateShippingCalculation() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({ cost: 15.50, provider: 'FedEx' });

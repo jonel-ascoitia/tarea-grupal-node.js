@@ -1,8 +1,5 @@
 export class AppError extends Error {
-    public statusCode: number;
-    public details?: any;
-
-    constructor(message: string, statusCode: number = 500, details?: any) {
+    constructor(message, statusCode = 500, details) {
         super(message);
         this.name = this.constructor.name;
         this.statusCode = statusCode;
@@ -12,13 +9,13 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-    constructor(message: string, details?: any) {
+    constructor(message, details) {
         super(message, 400, details);
     }
 }
 
 export class NotFoundError extends AppError {
-    constructor(message: string) {
+    constructor(message) {
         super(message, 404);
     }
 }

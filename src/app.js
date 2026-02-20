@@ -1,10 +1,10 @@
 import Fastify from 'fastify';
-import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
-import { logger } from './utils/logger';
-import registerPlugins from './plugins';
-import orderRoutes from './modules/orders/order.routes';
-import orchestrationRoutes from './modules/orchestration/orchestration.routes';
-import { config } from './config';
+import { serializerCompiler, validatorCompiler } from './plugins/validationCompiler.js';
+import { logger } from './utils/logger.js';
+import registerPlugins from './plugins/index.js';
+import orderRoutes from './modules/orders/order.routes.js';
+import orchestrationRoutes from './modules/orchestration/orchestration.routes.js';
+import { config } from './config/index.js';
 
 export const buildApp = async () => {
     const app = Fastify({

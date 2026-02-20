@@ -20,6 +20,3 @@ export const orderResponseSchema = z.object({
 export const getOrderParamsSchema = z.object({
     id: z.string().uuid(),
 });
-
-export type CreateOrderInput = z.infer<typeof createOrderSchema>;
-export type OrderResponse = z.infer<typeof orderResponseSchema>;

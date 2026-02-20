@@ -16,6 +16,3 @@ export const simulationResponseSchema = z.object({
     errors: z.array(z.string()).optional(),
     resolvedAt: z.string(),
 });
-
-export type SimulationRequestInput = z.infer<typeof simulationRequestSchema>;
-export type SimulationResponse = z.infer<typeof simulationResponseSchema>;

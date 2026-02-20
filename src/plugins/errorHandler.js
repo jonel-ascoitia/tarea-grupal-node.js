@@ -1,9 +1,8 @@
-import { FastifyInstance, FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import { AppError } from '../utils/errors';
-import { logger } from '../utils/logger';
+import { AppError } from '../utils/errors.js';
+import { logger } from '../utils/logger.js';
 
-export default async function errorHandlerPlugin(fastify: FastifyInstance) {
-    fastify.setErrorHandler((error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
+export default async function errorHandlerPlugin(fastify) {
+    fastify.setErrorHandler((error, request, reply) => {
         if (error instanceof AppError) {
             reply.status(error.statusCode).send({
                 error: error.name,

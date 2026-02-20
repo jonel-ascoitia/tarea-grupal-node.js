@@ -1,12 +1,7 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
-import { SimulationRequestInput } from './orchestration.schema';
-import { orchestrationService } from './orchestration.service';
-import { AppError } from '../../utils/errors';
+import { orchestrationService } from './orchestration.service.js';
+import { AppError } from '../../utils/errors.js';
 
-export const runSimulationHandler = async (
-    request: FastifyRequest<{ Body: SimulationRequestInput }>,
-    reply: FastifyReply
-) => {
+export const runSimulationHandler = async (request, reply) => {
     try {
         const result = await orchestrationService.runSimulation(request.body);
 
@@ -14,7 +9,7 @@ export const runSimulationHandler = async (
         const statusCode = result.status === 'partial_success' ? 207 : 200;
 
         return reply.status(statusCode).send(result);
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(`Unexpected error during orchestration: ${error.message}`, 500);
     }
 };

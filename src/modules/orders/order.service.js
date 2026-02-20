@@ -1,9 +1,8 @@
-import { supabase } from '../../utils/supabase';
-import { AppError } from '../../utils/errors';
-import { CreateOrderInput, OrderResponse } from './order.schema';
+import { supabase } from '../../utils/supabase.js';
+import { AppError } from '../../utils/errors.js';
 
 export class OrderService {
-    async processOrder(orderInput: CreateOrderInput): Promise<OrderResponse> {
+    async processOrder(orderInput) {
         // 1. Parallel Validations: Validate Customer and Stock
         const validationPromises = [
             this.validateCustomer(orderInput.customerId),
@@ -13,7 +12,7 @@ export class OrderService {
         const results = await Promise.allSettled(validationPromises);
 
         const errors = results
-            .filter((r): r is PromiseRejectedResult => r.status === 'rejected')
+            .filter((r) => r.status === 'rejected')
             .map(r => r.reason.message);
 
         if (errors.length > 0) {
@@ -34,7 +33,7 @@ export class OrderService {
         };
     }
 
-    private async validateCustomer(customerId: string): Promise<void> {
+    async validateCustomer(customerId) {
         const { data, error } = await supabase
             .from('customers')
             .select('id')
@@ -46,7 +45,7 @@ export class OrderService {
         }
     }
 
-    private async validateStock(items: { productId: string; quantity: number }[]): Promise<void> {
+    async validateStock(items) {
         const productIds = items.map(i => i.productId);
         const { data, error } = await supabase
             .from('products')
@@ -66,7 +65,7 @@ export class OrderService {
         }
     }
 
-    private async executeRpcWithRetry(rpcName: string, params: any, retries: number = 3): Promise<any> {
+    async executeRpcWithRetry(rpcName, params, retries = 3) {
         for (let attempt = 1; attempt <= retries; attempt++) {
             const { data, error } = await supabase.rpc(rpcName, params);
 

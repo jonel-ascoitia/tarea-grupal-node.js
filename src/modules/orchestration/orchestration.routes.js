@@ -1,12 +1,8 @@
-import { FastifyInstance } from 'fastify';
-import { ZodTypeProvider } from 'fastify-type-provider-zod';
-import { runSimulationHandler } from './orchestration.controller';
-import { simulationRequestSchema, simulationResponseSchema } from './orchestration.schema';
+import { runSimulationHandler } from './orchestration.controller.js';
+import { simulationRequestSchema, simulationResponseSchema } from './orchestration.schema.js';
 
-export default async function orchestrationRoutes(fastify: FastifyInstance) {
-    const server = fastify.withTypeProvider<ZodTypeProvider>();
-
-    server.post(
+export default async function orchestrationRoutes(fastify) {
+    fastify.post(
         '/simulate',
         {
             schema: {

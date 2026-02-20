@@ -1,10 +1,9 @@
-import { FastifyInstance } from 'fastify';
-import swaggerPlugin from './swagger';
-import errorHandlerPlugin from './errorHandler';
+import swaggerPlugin from './swagger.js';
+import errorHandlerPlugin from './errorHandler.js';
 import corsPlugin from '@fastify/cors';
 import rateLimitPlugin from '@fastify/rate-limit';
 
-export default async function registerPlugins(fastify: FastifyInstance) {
+export default async function registerPlugins(fastify) {
     // Register CORS
     await fastify.register(corsPlugin, {
         origin: '*',
