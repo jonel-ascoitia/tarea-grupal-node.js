@@ -10,14 +10,14 @@ export const buildApp = async () => {
     const app = Fastify({
         logger: config.NODE_ENV === 'test' ? false : {
             level: config.LOG_LEVEL,
-            transport: {
+            transport: config.NODE_ENV === 'development' ? {
                 target: 'pino-pretty',
                 options: {
                     colorize: true,
                     translateTime: 'HH:MM:ss Z',
                     ignore: 'pid,hostname',
                 },
-            },
+            } : undefined,
         },
     });
 
