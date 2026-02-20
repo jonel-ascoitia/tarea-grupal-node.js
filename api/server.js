@@ -1,8 +1,8 @@
-import { buildApp } from '../src/app';
+import { buildApp } from '../src/app.js';
 
-let appInstance: any = null;
+let appInstance = null;
 
-export default async (req: any, res: any) => {
+export default async (req, res) => {
     if (!appInstance) {
         appInstance = await buildApp();
         await appInstance.ready();
